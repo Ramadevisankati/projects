@@ -1,10 +1,8 @@
 # Employee Management System Using Python – copyassignment.com
 from os import system
 import re
-# importing mysql connector
 import mysql.connector
 
-# making Connection
 con = mysql.connector.connect(
     host="localhost", user="username", password="yourpassword")
 
@@ -207,56 +205,38 @@ def Promote_Employ():
 
         #executing the sql query
         c.execute(sql, d)
-
-        #commit() method to make changes in the table 
         con.commit()
         print("Employee Promoted")
         press = input("Press Any key To Continue..")
         menu()
-
-# Function to Remove_Employ
 def Remove_Employ():
     print("{:>60}".format("-->> Remove Employee Record <<--\n"))
     Id = input("Enter Employee Id: ")
-    # checking If Employee Id is Exit Or Not
     if(check_employee(Id) == False):
         print("Employee Record Not exists\nTry Again")
         press = input("Press Any Key To Continue..")
         menu()
     else:
-        #query to delete Employee from empdata table
         sql = 'delete from empdata where Id = %s'
         data = (Id,)
         c = con.cursor()
-
-        #executing the sql query
         c.execute(sql, data)
-
-        #commit() method to make changes in the empdata table
         con.commit()
         print("Employee Removed")
         press = input("Press Any key To Continue..")
         menu()
-        
-# Function to Search_Employ
 def Search_Employ():
     print("{:>60}".format("-->> Search Employee Record <<--\n"))
     Id = input("Enter Employee Id: ")
-    # checking If Employee Id is Exit Or Not
     if(check_employee(Id) == False):
         print("Employee Record Not exists\nTry Again")
         press = input("Press Any Key To Continue..")
         menu()
     else:
-        #query to search Employee from empdata table
         sql = 'select * from empdata where Id = %s'
         data = (Id,)
         c = con.cursor()
-        
-        #executing the sql query
         c.execute(sql, data)
-
-        #fetching all details of all the employee
         r = c.fetchall()
         for i in r:
             print("Employee Id: ", i[0])
@@ -269,8 +249,6 @@ def Search_Employ():
             print("\n")
         press = input("Press Any key To Continue..")
         menu()
-
-# Menu function to display menu
 def menu():
     system("cls")
     print("{:>60}".format("************************************"))
@@ -312,7 +290,4 @@ def menu():
         print("Invalid Choice!")
         press = input("Press Any key To Continue..")
         menu()
-
-
-# Calling menu function
 menu()
